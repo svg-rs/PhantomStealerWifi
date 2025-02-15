@@ -1,0 +1,39 @@
+# Ignore all .json files
+*.json
+
+# Optional: Uncomment to exclude specific JSON files (if needed)
+#!important_config.json
+
+# Logs and databases
+logs/
+*.log
+*.sqlite
+
+# Binaries
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dependency directories
+node_modules/
+vendor/
+dist/
+build/
