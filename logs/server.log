@@ -1,0 +1,24 @@
+17:29:24 | 200 |            0s | 127.0.0.1 | GET | / | -
+17:34:38 | 200 |            0s | 127.0.0.1 | GET | / | -
+18:03:49 | 404 |            0s | 127.0.0.1 | POST | /api/input | Cannot POST /api/input
+18:04:01 | 200 |            0s | 127.0.0.1 | POST | /api/input | -
+18:06:55 | 200 |            0s | 127.0.0.1 | POST | /api/input | -
+[127.0.0.1]:1387 200 - POST /api/input
+[127.0.0.1]:1405 200 - POST /api/input
+[127.0.0.1]:1502 200 - POST /api/input
+[127.0.0.1]:1502 200 - POST /api/input
+[127.0.0.1]:2618 200 - POST /api/input
+[127.0.0.1]:2618 200 - POST /api/input
+[127.0.0.1]:2618 200 - POST /api/input
+[127.0.0.1]:4199 200 - POST /api/input
+[127.0.0.1]:4246 200 - POST /api/input
+[127.0.0.1]:4248 200 - POST /api/input
+[127.0.0.1]:4532 400 - POST /api/input
+[127.0.0.1]:4534 400 - POST /api/input
+[127.0.0.1]:4554 200 - POST /api/input
+[127.0.0.1]:4556 200 - POST /api/input
+[127.0.0.1]:4593 400 - POST /api/input
+[127.0.0.1]:4612 400 - POST /api/input
+[127.0.0.1]:4614 400 - POST /api/input
+[127.0.0.1]:4620 400 - POST /api/input
+[127.0.0.1]:4655 200 - POST /api/input
