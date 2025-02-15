@@ -1,88 +1,63 @@
-# 👻 Phantom Stealer 👻
+# PhantomStealerWifi
 
-[![Go Version](https://img.shields.io/badge/Go-1.21+-blue.svg)](https://go.dev/)
+## Overview
 
-## 🚀 Overview
+PhantomStealerWifi is a simple Go project designed to steal Wi-Fi credentials from a Windows machine and send them to a server. It consists of a client that runs a PowerShell script to extract Wi-Fi profiles and their passwords and a server that receives and stores the stolen credentials.
 
-Phantom Stealer is a simple Go-based project designed to **steal Wi-Fi passwords** 😈 from a Windows machine and send them to a server. This project demonstrates basic client-server communication and is intended for educational purposes only.  **Use responsibly!**
+## Features
 
-## 🛠️ Project Structure
-├───client          # 📡 Client-side code (PowerShell script)
-├───logs            # 🪵 Server logs
-├───server          # 🌐 Server-side code (Fiber web server)
-└───static          # 📁 Static files (Not used in this example)
-main.go           # 🚦 Entry point - handles client/server mode
-## ⚙️ Installation and Usage
+*   **Client-Side Credential Harvesting:** Utilizes a PowerShell script to extract Wi-Fi SSIDs and passwords from the target machine.
+*   **Server-Side Data Storage:** Receives the harvested credentials via a POST request and stores them in a JSON file.
+*   **Logging:** The server logs incoming requests to a file, aiding in monitoring and debugging.
+*   **Simple REST API:** Server exposes an API endpoint for data reception.
 
-1.  **Prerequisites:**
+## Prerequisites
 
-    *   Go installed on your machine.
-    *   A Windows environment to run the client.
+*   **Go:**  Ensure you have Go installed (version 1.16 or higher).
+*   **Fiber:** You need to install the Fiber web framework.
+    ```bash
+    go get github.com/gofiber/fiber/v2
+    go get github.com/gofiber/fiber/v2/middleware/logger
+    ```
 
-2.  **Clone the repository:**
+## Getting Started
+
+1.  **Clone the repository:**
 
     ```bash
     git clone <repository_url>
-    cd <repository_directory>
+    cd PhantomStealer
     ```
+2.  **Build and Run:**
 
-3.  **Run the Server:**
+    *   **Server:**
+        ```bash
+        go run main.go -mode=server
+        ```
+        This will start the server, listening on port 3000.
+        Make sure that `logs/` and `server/credentials/` directories exists before running the server.  The server will create `server/credentials/creds.json` file in the correct folder and will create the log file inside the `logs` folder.
 
-    ```bash
-    go run main.go -mode=server
-    ```
-
-    This will start the server, listening on port `3000`.  Logs will be saved to `logs/server.log`.
-
-4.  **Run the Client:**
-
-    *   Open a new terminal or command prompt.
-    *   Navigate to the project directory.
-    *   Run the client:
-
+    *   **Client:**
+        To run the client, you need to have a Windows environment (either a physical machine or a virtual machine)
         ```bash
         go run main.go -mode=client
         ```
+        The client will execute a PowerShell script that extracts and sends Wi-Fi credentials to the server. The `creds.json` file will be updated at `server/credentials/` folder.
 
-    This will execute the PowerShell script within the `client` directory, collect Wi-Fi profiles, and send them to the server.
+## Usage
 
-## 💡 How it Works
+1.  Start the server.
+2.  Run the client on a target Windows machine. The client will gather the Wi-Fi profiles and their respective passwords and send it to the server at the specified IP and port.
+3.  The stolen Wi-Fi credentials will be stored in `server/credentials/creds.json` file on the server machine.
+4.  Server logs can be found at `logs/server.log`
 
-1.  **Client:**
+## Security Considerations
 
-    *   The client-side code, located in `client/client.go`, uses `exec.Command` to run a PowerShell script.
-    *   The PowerShell script does the following:
-        *   Uses `netsh wlan show profiles` to get a list of saved Wi-Fi profiles.
-        *   For each profile, uses `netsh wlan show profile ... key=clear` to retrieve the password (if available).
-        *   Formats the collected data into JSON.
-        *   Uses `Invoke-RestMethod` to send a POST request to the server endpoint `/api/input` with the JSON data.
+*   **Malicious Use:** This project is provided for educational and demonstration purposes only.  Do not use it for any illegal or unethical activities.  Unauthorized access to Wi-Fi credentials is a serious offense.
+*   **Antivirus Detection:**  Be aware that this kind of tool, even for legitimate use, might be flagged by antivirus software due to its credential-harvesting nature.
+*   **Server Security:**  The server is currently very basic. You should implement proper security measures (e.g., authentication, input validation) if you plan to deploy it in a real-world environment.
+*   **Error Handling:**  The error handling is kept to a minimum.  In a production environment, more robust error handling should be implemented.
 
-2.  **Server:**
+## License
 
-    *   The server-side code, located in `server/server.go`, uses the [Fiber](https://gofiber.io/) web framework.
-    *   The server defines a POST endpoint `/api/input`.
-    *   When a request is received at this endpoint:
-        *   It parses the JSON data in the request body.
-        *   It extracts the SSID and password from the received Wi-Fi profiles.
-        *   It prints the received SSID and password to the console.
-        *   Logs all requests and responses to `logs/server.log`.
-
-## ⚠️ Disclaimer
-
-This project is for educational purposes only.  It is **crucial** to use this project ethically and responsibly.  Unauthorized access to Wi-Fi passwords is illegal and can have serious consequences.  The author is not responsible for any misuse of this code. Always obtain proper authorization before attempting to access or collect any sensitive information.
-
-## ✨ Features
-
-*   Client-server architecture.
-*   Wi-Fi password extraction from Windows using PowerShell.
-*   Data transmission using JSON.
-*   Simple server with logging.
-*   Uses Fiber, a Go web framework.
-
-## 🤝 Contributing
-
-Contributions are welcome!  Feel free to submit pull requests or open issues.
-
-## 📜 License
-
-[MIT License](LICENSE)
+This project is licensed under the [MIT License](LICENSE).

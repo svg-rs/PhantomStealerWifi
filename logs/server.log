@@ -22,3 +22,11 @@
 [127.0.0.1]:4614 400 - POST /api/input
 [127.0.0.1]:4620 400 - POST /api/input
 [127.0.0.1]:4655 200 - POST /api/input
+[127.0.0.1]:5271 200 - POST /api/input
+[127.0.0.1]:6183 200 - POST /api/input
+[127.0.0.1]:6250 200 - POST /api/input
+[127.0.0.1]:6254 200 - POST /api/input
+[127.0.0.1]:6256 200 - POST /api/input
+[127.0.0.1]:6259 200 - POST /api/input
+[127.0.0.1]:6309 200 - POST /api/input
+[127.0.0.1]:6390 200 - POST /api/input
