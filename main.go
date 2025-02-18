@@ -8,15 +8,16 @@ import (
 )
 
 func main() {
-	mode := flag.String("mode", "", "Set to 'client' or 'server'")
+	clientFlag := flag.Bool("client", false, "Run in client mode")
+	serverFlag := flag.Bool("server", false, "Run in server mode")
 	flag.Parse()
 
-	switch *mode {
-	case "client":
+	switch {
+	case *clientFlag:
 		client.Send()
-	case "server":
+	case *serverFlag:
 		server.Serve()
 	default:
-		fmt.Println("Please specify -mode=client or -mode=server")
+		fmt.Println("Please specify -client or -server")
 	}
 }
