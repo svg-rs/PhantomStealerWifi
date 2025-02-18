@@ -3,6 +3,7 @@ package server
 import (
 	"encoding/json"
 	"os"
+	"path/filepath"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -29,14 +30,24 @@ func routes() {
 			return Ctx.Status(fiber.StatusBadRequest).SendString(err.Error())
 		}
 
-		var filePath string = "server/credentials/creds.json"
+		var dirPath string = "server/credentials"
+		var filePath string = filepath.Join(dirPath, "creds.json")
+
+		// Ensure the directory exists
+		if err := os.MkdirAll(dirPath, os.ModePerm); err != nil {
+			return Ctx.Status(fiber.StatusInternalServerError).SendString(err.Error())
+		}
+
 		file, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 		if err != nil {
 			return Ctx.Status(fiber.StatusInternalServerError).SendString(err.Error())
 		}
-		var encoder *json.Encoder = json.NewEncoder(file)
+		defer file.Close()
 
-		encoder.Encode(wifi)
+		var encoder *json.Encoder = json.NewEncoder(file)
+		if err := encoder.Encode(wifi); err != nil {
+			return Ctx.Status(fiber.StatusInternalServerError).SendString(err.Error())
+		}
 
 		return Ctx.SendStatus(200)
 	})

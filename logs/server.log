@@ -30,3 +30,4 @@
 [127.0.0.1]:6259 200 - POST /api/input
 [127.0.0.1]:6309 200 - POST /api/input
 [127.0.0.1]:6390 200 - POST /api/input
+[127.0.0.1]:54827 200 - POST /api/input
